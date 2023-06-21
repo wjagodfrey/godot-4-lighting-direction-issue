@@ -1,7 +1,38 @@
-[gd_scene load_steps=2 format=3 uid="uid://qaa8x2qp11et"]
+[gd_scene load_steps=6 format=3 uid="uid://qaa8x2qp11et"]
 
 [ext_resource type="PackedScene" uid="uid://bxpw6br800lfw" path="res://Crate/Crate.tscn" id="1_y1rfy"]
 
+[sub_resource type="Environment" id="Environment_0d6p0"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_xh3q8"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ufdpa"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_g80bu"]
+
 [node name="Node3D" type="Node3D"]
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0d6p0")
+camera_attributes = SubResource("CameraAttributesPractical_xh3q8")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 3, 1.5)
+shadow_enabled = true
+
 [node name="Crate" parent="." instance=ExtResource("1_y1rfy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
+
+[node name="Ground" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+transform = Transform3D(5.00451, 0, 0, 0, 1.0009, 0, 0, 0, 5.00451, 0, 0, 0)
+mesh = SubResource("PlaneMesh_ufdpa")
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_g80bu")
